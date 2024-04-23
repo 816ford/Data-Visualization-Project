@@ -84,7 +84,7 @@ rating = []
 review_count = []
 price = []
 
-for i in range (1,11):
+for i in range (1,150):
     
     # website in variable
     website = 'https://www.cars.com/shopping/results/?makes[]=&maximum_distance=50&models[]=&page='+str(i)+'1&page_size=100&stock_type=all&zip=64082'
