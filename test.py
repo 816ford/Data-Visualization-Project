@@ -20,7 +20,7 @@ results = soup.find_all('div', {'class' : 'vehicle-card'})
 # Target necessary data. 
 
 # Name
-results[0].find('h2').get_text().split()[-1]
+results[0].find('h2').get_text()
 # Dealer Name
 results[0].find('div', {'class':'dealer-name'}).get_text().strip
 # Rating
@@ -84,7 +84,7 @@ rating = []
 review_count = []
 price = []
 
-for i in range (1):
+for i in range (1,40):
     
     # website in variable
     website = 'https://www.cars.com/shopping/results/?makes[]=&maximum_distance=50&models[]=&page='+str(i)+'1&page_size=100&stock_type=all&zip=64082'
