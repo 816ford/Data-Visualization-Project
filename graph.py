@@ -1,7 +1,9 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
-from test import car_dealer
+import numpy as np
+from scipy import stats
+
 
 
 plt.rcParams["figure.figsize"] = [7.00, 3.50]
@@ -36,5 +38,22 @@ vehicles_df = vehicles_df.rename(columns={
 merged_df = vehicles_df.merge(cars_df, how = "left", on = ["Make", "Year"])
 # cleaned_df = merged_df.dropna(subset=["Price"])
 
-sns.scatterplot(x="Price", y="Mileage Combined Mpg", data=carAPI_df)
+
+
+Q1 = carAPI_df["Trim Msrp"].quantile(0.25)
+Q3 = carAPI_df["Trim Msrp"].quantile(0.75)
+IQR = Q3 - Q1
+
+z = np.abs(stats.zscore(carAPI_df["Trim Msrp"]))
+
+threshold = 2
+upperLimit = Q1 - threshold * IQR
+lowerLimit = Q3 + threshold * IQR
+
+carAPI_df[carAPI_df["Trim Msrp"] > upperLimit]
+carAPI_df[carAPI_df["Trim Msrp"] < lowerLimit]
+
+trimmed_df = carAPI_df.loc[(carAPI_df["Trim Msrp"] > upperLimit) | (carAPI_df[carAPI_df["Trim Msrp"] < lowerLimit])]
+
+sns.scatterplot(y="Trim Msrp", x="Mileage Combined Mpg", data=trimmed_df)
 plt.show()
