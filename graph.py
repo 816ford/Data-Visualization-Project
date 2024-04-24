@@ -1,8 +1,7 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
-from functions import make, years
-
+from test import car_dealer
 
 
 plt.rcParams["figure.figsize"] = [7.00, 3.50]
@@ -34,8 +33,8 @@ vehicles_df = vehicles_df.rename(columns={
 
 #plt.show()
 
-merged_df = vehicles_df.merge(cars_df, how = 'left', on = ["Make", "Year"])
+merged_df = vehicles_df.merge(cars_df, how = "left", on = ["Make", "Year"])
 # cleaned_df = merged_df.dropna(subset=["Price"])
 
-sns.scatterplot(x="Engine Size", y="Mileage Combined Mpg", data=carAPI_df)
+sns.scatterplot(x="Price", y="Mileage Combined Mpg", data=carAPI_df)
 plt.show()
