@@ -1,6 +1,8 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
+import numpy as np
+import scipy.stats as stats
 
 
 sns.set()
@@ -32,10 +34,31 @@ vehicles_df = vehicles_df.rename(columns={
 # sns.boxplot(x="Price", y="Make", hue="Year", data=years(2005,make("Honda", df)))
 # plt.show()
 
+#Finding z-score for trim msrp
+trim_msrp_z = pd.DataFrame(np.abs(stats.zscore(carAPI_df["Trim Msrp"])))
+trim_msrp_z = trim_msrp_z.rename(columns = {
+    "Trim Msrp" : "Trim Msrp Z-Score"
+})
 
-#sns.lineplot(y="Engine Size", x="Mileage Combined Mpg", data=merged_df, err_style=None)
+#Joining new z-score column into new dataframe
+merged_df = carAPI_df.join(trim_msrp_z, how = "left")
+
+#Setting thresholds
+upper_threshold = 3
+lower_threshold = -3
+
+#Finding all outliers
+outliers = merged_df.loc[(merged_df["Trim Msrp Z-Score"] > upper_threshold) | 
+                         (merged_df["Trim Msrp Z-Score"] < lower_threshold) 
+                         ]
+
+#Dropping outliers from merged_df
+merged_df = merged_df.drop(outliers.index)
+
 
 sns.scatterplot(y="Engine Size", x="Mileage Combined Mpg", data=carAPI_df)
+#sns.scatterplot(y="Trim Msrp", x="Mileage Combined Mpg", data=merged_df)
+
 
 plt.show()
 
