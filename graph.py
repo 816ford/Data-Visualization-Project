@@ -1,11 +1,9 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
-import numpy as np
-from scipy import stats
 
 
-
+sns.set()
 plt.rcParams["figure.figsize"] = [7.00, 3.50]
 plt.rcParams["figure.autolayout"] = True
 
@@ -32,28 +30,15 @@ vehicles_df = vehicles_df.rename(columns={
 
 # sns.boxplot(x="Price", y="Make", hue="Year", data=years(2005,make("Porsche", df)))
 # sns.boxplot(x="Price", y="Make", hue="Year", data=years(2005,make("Honda", df)))
-
-#plt.show()
-
-merged_df = vehicles_df.merge(cars_df, how = "left", on = ["Make", "Year"])
-# cleaned_df = merged_df.dropna(subset=["Price"])
+# plt.show()
 
 
+#sns.lineplot(y="Engine Size", x="Mileage Combined Mpg", data=merged_df, err_style=None)
 
-Q1 = carAPI_df["Trim Msrp"].quantile(0.25)
-Q3 = carAPI_df["Trim Msrp"].quantile(0.75)
-IQR = Q3 - Q1
+sns.scatterplot(y="Engine Size", x="Mileage Combined Mpg", data=carAPI_df)
 
-z = np.abs(stats.zscore(carAPI_df["Trim Msrp"]))
-
-threshold = 2
-upperLimit = Q1 - threshold * IQR
-lowerLimit = Q3 + threshold * IQR
-
-carAPI_df[carAPI_df["Trim Msrp"] > upperLimit]
-carAPI_df[carAPI_df["Trim Msrp"] < lowerLimit]
-
-trimmed_df = carAPI_df.loc[(carAPI_df["Trim Msrp"] > upperLimit) | (carAPI_df[carAPI_df["Trim Msrp"] < lowerLimit])]
-
-sns.scatterplot(y="Trim Msrp", x="Mileage Combined Mpg", data=trimmed_df)
 plt.show()
+
+
+
+
