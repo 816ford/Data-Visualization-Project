@@ -29,6 +29,8 @@ results[0].find("span", {"class":"sds-rating__count"}).get_text()
 results[0].find("span", {"class":"sds-rating__link"}).get_text()
 # Price
 results[0].find("span", {"class":"primary-price"}).get_text()
+# Engine Cylinders
+results[0].find("div", {"class":"cylinders"}).get_text()
 
 # Put everything together inside a For-Loop
 name = []
@@ -36,6 +38,7 @@ dealer_name = []
 rating = []
 review_count = []
 price = []
+cylinders = []
 
 for result in results:
     
@@ -69,10 +72,16 @@ for result in results:
     except:
         price.append("n/a")
 
+    # Engine Cylinders
+    try:
+        cylinders.append(result.find("div", {"class":"cylinders"}).get_text())
+    except:
+        cylinders.append("n/a")
+
 # Create Pandas Dataframe
 # dictionary
 car_dealer = pd.DataFrame({"Name": name, "Dealer Name":dealer_name,
-                                "Rating": rating, "Review Count": review_count, "Price": price})
+                                "Rating": rating, "Review Count": review_count, "Price": price, "Cylinders": cylinders})
 # Output in Excel
 car_dealer.to_excel("output/car_dealer_single_page.xlsx", index=False)
 
@@ -83,6 +92,7 @@ dealer_name = []
 rating = []
 review_count = []
 price = []
+cylinders = []
 
 for i in range (1,100):
     
@@ -136,7 +146,13 @@ for i in range (1,100):
             price.append(result.find("span", {"class":"primary-price"}).get_text())
         except:
             price.append("n/a")
+
+        # Engine Cylinders
+        try:
+            cylinders.append(result.find("div", {"class":"cylinders"}).get_text())
+        except:
+            cylinders.append("n/a")
 # dictionary
 car_dealer = pd.DataFrame({"Name": name, "Mileage":mileage, "Dealer Name":dealer_name,
-                                "Rating": rating, "Review Count": review_count, "Price": price})
+                                "Rating": rating, "Review Count": review_count, "Price": price, "Cylinders": cylinders})
 car_dealer.to_excel("output/car_dealer_single_page.xlsx", index=False)
