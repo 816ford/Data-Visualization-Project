@@ -35,7 +35,7 @@ outliers = merged_df.loc[(merged_df["Trim Msrp Z-Score"] > upper_threshold) |
                          (merged_df["Trim Msrp Z-Score"] < lower_threshold) 
                          ]
 
-#Dropping outliers from merged_df in trim msrp column
+#Dropping outliers from merged_df
 merged_df = merged_df.drop(outliers.index)
 
 #plotting figures
