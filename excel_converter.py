@@ -29,8 +29,7 @@ results[0].find("span", {"class":"sds-rating__count"}).get_text()
 results[0].find("span", {"class":"sds-rating__link"}).get_text()
 # Price
 results[0].find("span", {"class":"primary-price"}).get_text()
-# Engine Cylinders
-results[0].find("div", {"class":"cylinders"}).get_text()
+
 
 # Put everything together inside a For-Loop
 name = []
@@ -38,7 +37,7 @@ dealer_name = []
 rating = []
 review_count = []
 price = []
-cylinders = []
+
 
 for result in results:
     
@@ -72,18 +71,14 @@ for result in results:
     except:
         price.append("n/a")
 
-    # Engine Cylinders
-    try:
-        cylinders.append(result.find("div", {"class":"cylinders"}).get_text())
-    except:
-        cylinders.append("n/a")
+   
 
 # Create Pandas Dataframe
 # dictionary
 car_dealer = pd.DataFrame({"Name": name, "Dealer Name":dealer_name,
-                                "Rating": rating, "Review Count": review_count, "Price": price, "Cylinders": cylinders})
+                                "Rating": rating, "Review Count": review_count, "Price": price})
 # Output in Excel
-car_dealer.to_excel("output/car_dealer_single_page.xlsx", index=False)
+car_dealer.to_excel("resources/test.xlsx", index=False)
 
 # Pagination
 name = []
@@ -92,12 +87,12 @@ dealer_name = []
 rating = []
 review_count = []
 price = []
-cylinders = []
 
-for i in range (1,100):
+
+for i in range (1,200):
     
     # website in variable
-    website = "https://www.cars.com/shopping/results/?makes[]=&maximum_distance=50&models[]=&page="+str(i)+"1&page_size=100&stock_type=all&zip=64082"
+    website = "https://www.cars.com/shopping/results/?makes[]=&maximum_distance=100&models[]=&page="+str(i)+"&stock_type=all&zip=64082"
     
     # request to website
     response = requests.get(website)
@@ -147,12 +142,7 @@ for i in range (1,100):
         except:
             price.append("n/a")
 
-        # Engine Cylinders
-        try:
-            cylinders.append(result.find("div", {"class":"cylinders"}).get_text())
-        except:
-            cylinders.append("n/a")
 # dictionary
 car_dealer = pd.DataFrame({"Name": name, "Mileage":mileage, "Dealer Name":dealer_name,
-                                "Rating": rating, "Review Count": review_count, "Price": price, "Cylinders": cylinders})
-car_dealer.to_excel("output/car_dealer_single_page.xlsx", index=False)
+                                "Rating": rating, "Review Count": review_count, "Price": price})
+car_dealer.to_excel("resources/test.xlsx", index=False)
