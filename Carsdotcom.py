@@ -3,12 +3,13 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import numpy as np
 import scipy.stats as stats
-import scipy
 
 
 sns.set()
-plt.rcParams["figure.figsize"] = [7.00, 3.50]
+plt.rcParams["figure.figsize"] = [15, 3.50]
 plt.rcParams["figure.autolayout"] = True
+
+
 
 
 cols = ["Make", "Model", "Year", "Price", "Mileage"]
@@ -31,9 +32,6 @@ df[np.abs(stats.zscore(df["Price"])) < 3]
 df = df[df["Price"] < 100000]
 
 
-f, ax = plt.subplots(figsize=(7, 7))
-ax.set(xscale="log", yscale="log")
-# sns.regplot(x="Mileage", y="Price",data=df, ax=ax, scatter_kws={"s": 80})
 
 
 sns.lmplot(x="Mileage", y="Price", hue="Make", data=df, logx=True, ci=None, scatter_kws={"s": 100})
