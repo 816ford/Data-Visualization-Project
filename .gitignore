@@ -1,3 +1,2 @@
 #removes pyc and excel files from commiting
 *.pyc
-*.xlsx
