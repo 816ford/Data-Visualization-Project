@@ -3,6 +3,7 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import numpy as np
 import scipy.stats as stats
+import squarify
 
 
 sns.set()
@@ -31,7 +32,15 @@ print(avg_price)
 df[np.abs(stats.zscore(df["Price"])) < 3]
 df = df[df["Price"] < 100000]
 
+#making a heatmap for the number of sales per make
+makes_count = "Make Count"
+df[makes_count] = df["Make"].value_counts()
+average_price = "Average Price"
+df[average_price] = df["Make"].map(avg_price)
 
+
+print(df["Make Count"].head())
+# squarify.plot(sizes=df['Make'].value_counts(), label=df["Make"].unique(), alpha=.8, color=sns.color_palette("Blues", len(df["Make"].unique())))
 
 
 sns.lmplot(x="Mileage", y="Price", hue="Make", data=df, logx=True, ci=None, scatter_kws={"s": 100})
